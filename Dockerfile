@@ -19,3 +19,5 @@ COPY poetry.lock /app/poetry.lock
 RUN poetry install
 
 COPY . /app
+
+CMD ["python", "server.py"]
