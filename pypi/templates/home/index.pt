@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Custom Fake PyPi</title>
+</head>
+<body>
+<h1>Custom Fake PyPi</h1>
+
+<div>User: ${user_name}</div>
+
+<ul>
+  <li>fastapi</li>
+  <li>uvicorn</li>
+  <li>requests</li>
+  <li>new!</li>
+  <li>1</li>
+</ul>
+
+</body>
+</html>
