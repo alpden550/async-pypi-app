@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "async-pypi-app"
+version = "0.1.0"
+description = ""
+authors = ["Denis Novikov <alpden550@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = "^0.70.0"
+uvicorn = "^0.15.0"
+fastapi-chameleon = "^0.1.12"
+
+[tool.poetry.dev-dependencies]
+black = "^21.12b0"
+wemake-python-styleguide = "^0.15.3"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
