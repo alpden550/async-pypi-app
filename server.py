@@ -1,6 +1,7 @@
 import uvicorn
 from fastapi import FastAPI
 from fastapi_chameleon import global_init
+from starlette.staticfiles import StaticFiles
 
 from pypi.views import accounts, home, packages
 
@@ -9,6 +10,7 @@ app = FastAPI()
 
 def configure_templates():
     global_init(template_folder="pypi/templates", auto_reload=True)
+    app.mount("/static", StaticFiles(directory='pypi/static'), name="static")
 
 
 def configure_routes():
