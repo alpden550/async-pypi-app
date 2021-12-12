@@ -10,13 +10,13 @@ app = FastAPI()
 
 def configure_templates():
     global_init(template_folder="pypi/templates", auto_reload=True)
-    app.mount("/static", StaticFiles(directory='pypi/static'), name="static")
+    app.mount("/static", StaticFiles(directory="pypi/static"), name="static")
 
 
 def configure_routes():
     app.include_router(home.router)
-    app.include_router(accounts.router)
-    app.include_router(packages.router)
+    app.include_router(accounts.router, prefix="/account")
+    app.include_router(packages.router, prefix="/project")
 
 
 def configure_app():
