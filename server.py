@@ -11,11 +11,6 @@ from pypi.views import accounts, home, packages
 app = FastAPI()
 
 
-@lru_cache()
-def get_settings():
-    return Settings()
-
-
 def configure_templates():
     global_init(template_folder="pypi/templates", auto_reload=True)
     app.mount("/static", StaticFiles(directory="pypi/static"), name="static")
