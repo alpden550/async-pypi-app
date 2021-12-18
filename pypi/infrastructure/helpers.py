@@ -1,8 +1,11 @@
 import hashlib
 
+from pypi.config import get_settings
+
 
 def __hash_text(text: str) -> str:
-    text = f"salty__{text}__text"
+    salty = get_settings().salt
+    text = f"{salty}__{text}__text"
     return hashlib.sha512(text.encode("utf-8")).hexdigest()
 
 
