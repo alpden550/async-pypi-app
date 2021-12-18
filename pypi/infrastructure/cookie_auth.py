@@ -3,10 +3,10 @@ from typing import Optional
 from starlette.requests import Request
 from starlette.responses import Response
 
-from pypi.config import settings
+from pypi.config import get_settings
 from pypi.infrastructure.helpers import __hash_text, try_int
 
-AUTH_COOKIE_NAME = settings.auth_cookie_name
+AUTH_COOKIE_NAME = get_settings().auth_cookie_name
 
 
 def set_auth(response: Response, user_id: int) -> None:
