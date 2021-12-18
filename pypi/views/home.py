@@ -10,6 +10,5 @@ router = APIRouter()
 @router.get("/")
 @template("home/index.pt")
 def index(request: Request):
-    """Main index pypi page."""
     model = IndexViewModel(request)
     return model.to_dict()
