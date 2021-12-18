@@ -1,11 +1,8 @@
-from functools import lru_cache
-
 import uvicorn
 from fastapi import FastAPI
 from fastapi_chameleon import global_init
 from starlette.staticfiles import StaticFiles
 
-from pypi.config import Settings
 from pypi.views import accounts, home, packages
 
 app = FastAPI()
