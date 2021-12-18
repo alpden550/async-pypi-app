@@ -3,22 +3,23 @@ from typing import Optional
 from starlette.requests import Request
 from starlette.responses import Response
 
+from pypi.config import settings
 from pypi.infrastructure.helpers import __hash_text, try_int
 
-auth_cookie_name = "pypi_account"
+AUTH_COOKIE_NAME = settings.auth_cookie_name
 
 
 def set_auth(response: Response, user_id: int) -> None:
     hash_value = __hash_text(str(user_id))
     value = f"{user_id}:{hash_value}"
-    response.set_cookie(auth_cookie_name, value, secure=False, httponly=True)
+    response.set_cookie(AUTH_COOKIE_NAME, value, secure=False, httponly=True)
 
 
 def get_user_id_from_cookie(request: Request) -> Optional[int]:
-    if auth_cookie_name not in request.cookies:
+    if AUTH_COOKIE_NAME not in request.cookies:
         return None
 
-    value = request.cookies[auth_cookie_name]
+    value = request.cookies[AUTH_COOKIE_NAME]
     value_parts = value.split(":")
 
     if len(value_parts) != 2:
@@ -33,4 +34,4 @@ def get_user_id_from_cookie(request: Request) -> Optional[int]:
 
 
 def logout(response: Response) -> None:
-    response.delete_cookie(auth_cookie_name)
+    response.delete_cookie(AUTH_COOKIE_NAME)
