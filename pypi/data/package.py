@@ -1,22 +1,39 @@
-from typing import Optional
+import datetime
+
+import sqlalchemy as sa
+import sqlalchemy.orm as orm
+
+from pypi.data.base_model import BaseSQLAlchemy
+from pypi.data.release import Release
 
 
-class Package:
-    def __init__(
-        self,
-        package_name: str,
-        summary: str,
-        description: str,
-        home_page: str,
-        package_license: str,
-        author_name: str,
-        maintainers: Optional[list] = None,
-    ):
-        self.package_name = package_name
-        self.id = package_name
-        self.summary = summary
-        self.description = description
-        self.home_page = home_page
-        self.license = package_license
-        self.author_name = author_name
-        self.maintainers = [] if maintainers is None else maintainers
+class Package(BaseSQLAlchemy):
+    __tablename__ = "packages"
+
+    id: str = sa.Column(sa.String, primary_key=True, unique=True)
+    created_at: datetime.datetime = sa.Column(sa.DateTime, default=datetime.datetime.now(), primary_key=True)
+    updated_at: datetime.datetime = sa.Column(sa.DateTime, default=datetime.datetime.now(), primary_key=True)
+    summary: str = sa.Column(sa.String, nullable=False)
+    description: str = sa.Column(sa.String, nullable=False)
+
+    home_page: str = sa.Column(sa.String)
+    docs_url: str = sa.Column(sa.String)
+    package_url: str = sa.Column(sa.String)
+
+    author_name: str = sa.Column(sa.String)
+    author_email: str = sa.Column(sa.String, index=True)
+
+    license: str = sa.Column(sa.String, index=True)
+
+    releases: list[Release] = orm.relationship(
+        "Release",
+        order_by=[
+            Release.major_ver.desc(),
+            Release.minor_ver.desc(),
+            Release.build_ver.desc(),
+        ],
+        back_populates="package",
+    )
+
+    def __repr__(self):
+        return f"<Package {self.id}>"
