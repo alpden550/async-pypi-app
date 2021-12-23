@@ -1,14 +1,20 @@
-FROM python:3.10-slim-buster
+FROM python:3.10-alpine
 
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 ENV POETRY_VIRTUALENVS_CREATE=false
+ENV CRYPTOGRAPHY_DONT_BUILD_RUST=1
 
 WORKDIR /app
 
-RUN apt-get update \
-  && apt-get -y install netcat gcc \
-  && apt-get clean \
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+RUN apk update \
+    && apk add gcc python3-dev musl-dev build-base postgresql-dev libffi-dev\
+    && apk add zlib-dev cairo-dev pango-dev gdk-pixbuf-dev \
+    && apk add openssl-dev cargo
+
 
 RUN pip install --upgrade pip
 RUN pip install poetry
@@ -20,4 +26,4 @@ RUN poetry install
 
 COPY . /app
 
-CMD ["python", "server.py"]
+ENTRYPOINT ["/app/entrypoint.sh"]
