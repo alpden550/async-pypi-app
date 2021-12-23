@@ -3,6 +3,8 @@ from fastapi import FastAPI
 from fastapi_chameleon import global_init
 from starlette.staticfiles import StaticFiles
 
+from pypi.config import get_settings
+from pypi.data import db_session
 from pypi.views import accounts, home, packages
 
 app = FastAPI()
@@ -19,9 +21,14 @@ def configure_routes():
     app.include_router(packages.router, prefix="/project")
 
 
+def configure_db(dev_mode: bool):
+    db_session.global_init(get_settings().db_url)
+
+
 def configure_app():
     configure_templates()
     configure_routes()
+    configure_db(dev_mode=True)
 
 
 def main():
