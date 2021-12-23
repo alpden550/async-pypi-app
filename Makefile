@@ -11,3 +11,6 @@ black:
 
 flake:
 	docker-compose exec app flake8 .
+
+stop:
+	docker-compose stop
