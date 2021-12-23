@@ -11,6 +11,9 @@ uvicorn = "^0.15.0"
 fastapi-chameleon = "^0.1.12"
 python-multipart = "^0.0.5"
 python-dotenv = "^0.19.2"
+SQLAlchemy = "^1.4.29"
+psycopg2-binary = "^2.9.2"
+asyncpg = "^0.25.0"
 
 [tool.poetry.dev-dependencies]
 black = "^21.12b0"
