@@ -9,3 +9,16 @@ services:
       - "8000:8000"
     volumes:
       - .:/app
+    depends_on:
+      - db
+    env_file:
+      - .env
+    command: >
+      sh -c "python server.py"
+
+  db:
+      image: postgres
+      ports:
+        - "5432:5432"
+      env_file:
+        - .env
