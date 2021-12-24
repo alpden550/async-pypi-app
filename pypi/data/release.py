@@ -21,7 +21,7 @@ class Release(BaseSQLAlchemy):
     size: int = sa.Column(sa.BigInteger)
 
     package_id: str = sa.Column(sa.String, sa.ForeignKey("packages.id"))
-    package = orm.relationship("Package")
+    package = orm.relationship("Package", backref="releases")
 
     def __repr__(self):
         return f"Release for {self.package_id} - {self.version_text}"
