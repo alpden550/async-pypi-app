@@ -9,7 +9,8 @@ class User(BaseSQLAlchemy):
     __tablename__ = "users"
 
     id: int = sa.Column(sa.Integer, primary_key=True, autoincrement=True)
-    name: str = sa.Column(sa.String)
+    name: str = sa.Column(sa.String, index=True)
+    username: str = sa.Column(sa.String, nullable=True)
     email: str = sa.Column(sa.String, index=True, unique=True)
     hash_password: str = sa.Column(sa.String)
     created_at: datetime.datetime = sa.Column(sa.DateTime, default=datetime.datetime.now, index=True)
