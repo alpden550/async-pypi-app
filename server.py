@@ -22,7 +22,7 @@ def configure_routes():
 
 
 def configure_db(dev_mode: bool):
-    db_session.global_init(get_settings().db_url)
+    db_session.global_init(get_settings().database_url)
 
 
 def configure_app():
