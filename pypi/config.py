@@ -1,12 +1,12 @@
 from functools import lru_cache
 
-from pydantic import BaseSettings, Field
+from pydantic import BaseSettings, PostgresDsn
 
 
 class Settings(BaseSettings):
     auth_cookie_name: str
     salt: str
-    db_url: str = Field(..., env="DATABASE_URL")
+    database_url: PostgresDsn
 
     class Config:
         env_file = ".env"
