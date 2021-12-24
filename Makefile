@@ -14,3 +14,9 @@ flake:
 
 stop:
 	docker-compose stop
+
+makemigrations:
+	 docker-compose exec app alembic revision --autogenerate
+
+migrate:
+	 docker-compose exec app alembic upgrade head
