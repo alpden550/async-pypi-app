@@ -4,9 +4,11 @@ import sqlalchemy as sa
 import sqlalchemy.orm as orm
 from sqlalchemy.orm import Session
 
+from pypi.config import get_settings
 from pypi.data.base_model import BaseSQLAlchemy
 
 __factory: Optional[Callable[[], Session]] = None
+engine = sa.create_engine(get_settings().database_url, pool_pre_ping=True, echo=False)
 
 
 def global_init(db_file: str):
@@ -18,7 +20,6 @@ def global_init(db_file: str):
     if not db_file or not db_file.strip():
         raise Exception("You must specify the database.")
 
-    engine = sa.create_engine(db_file, echo=False)
     __factory = orm.sessionmaker(bind=engine)
 
     import pypi.data.__all_models  # noqa
