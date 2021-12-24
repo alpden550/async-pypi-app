@@ -16,7 +16,7 @@ stop:
 	docker-compose stop
 
 makemigrations:
-	 docker-compose exec app alembic revision --autogenerate
+	 docker-compose exec app alembic revision --autogenerate -m "${message}"
 
 migrate:
 	 docker-compose exec app alembic upgrade head
