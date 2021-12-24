@@ -1,6 +1,7 @@
 import datetime
 
 import sqlalchemy as sa
+import sqlalchemy.orm as orm
 
 from pypi.data.base_model import BaseSQLAlchemy
 
@@ -18,6 +19,9 @@ class Package(BaseSQLAlchemy):
     docs_url: str = sa.Column(sa.String)
     package_url: str = sa.Column(sa.String)
     license: str = sa.Column(sa.String, index=True)
+
+    user_id: int = sa.Column(sa.ForeignKey("users.id"))
+    user = orm.relationship("User", backref="packages")
 
     def __repr__(self):
         return f"<Package {self.id}>"
