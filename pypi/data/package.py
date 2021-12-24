@@ -1,10 +1,8 @@
 import datetime
 
 import sqlalchemy as sa
-import sqlalchemy.orm as orm
 
 from pypi.data.base_model import BaseSQLAlchemy
-from pypi.data.release import Release
 
 
 class Package(BaseSQLAlchemy):
@@ -19,21 +17,7 @@ class Package(BaseSQLAlchemy):
     home_page: str = sa.Column(sa.String)
     docs_url: str = sa.Column(sa.String)
     package_url: str = sa.Column(sa.String)
-
-    author_name: str = sa.Column(sa.String)
-    author_email: str = sa.Column(sa.String, index=True)
-
     license: str = sa.Column(sa.String, index=True)
-
-    releases: list[Release] = orm.relationship(
-        "Release",
-        order_by=[
-            Release.major_ver.desc(),
-            Release.minor_ver.desc(),
-            Release.build_ver.desc(),
-        ],
-        back_populates="package",
-    )
 
     def __repr__(self):
         return f"<Package {self.id}>"
