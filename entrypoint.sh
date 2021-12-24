@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [ "$DATABASE" = "postgres" ]
+if [ "$POSTGRES_DB" = "pypi" ]
 then
     echo "Waiting for postgres..."
 
