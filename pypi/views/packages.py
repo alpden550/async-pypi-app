@@ -2,7 +2,7 @@ from fastapi import APIRouter
 from fastapi_chameleon import template
 from starlette.requests import Request
 
-from pypi.models.packages import DetailPackageViewModel
+from pypi.view_models.packages import DetailPackageViewModel
 
 router = APIRouter()
 

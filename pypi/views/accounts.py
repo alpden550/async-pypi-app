@@ -5,7 +5,7 @@ from starlette import status
 from starlette.requests import Request
 
 from pypi.infrastructure import cookie_auth
-from pypi.models.account import AccountViewModel, LoginViewModel, RegisterViewModel
+from pypi.view_models.account import AccountViewModel, LoginViewModel, RegisterViewModel
 from pypi.services import user_service
 
 router = APIRouter()

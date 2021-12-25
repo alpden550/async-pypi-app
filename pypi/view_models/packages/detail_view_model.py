@@ -1,6 +1,6 @@
 from starlette.requests import Request
 
-from pypi.models.shared.view_model import BaseViewModel
+from pypi.view_models.shared.view_model import BaseViewModel
 from pypi.services import package_service
 
 

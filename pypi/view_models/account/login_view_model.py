@@ -2,7 +2,7 @@ from typing import Optional
 
 from starlette.requests import Request
 
-from pypi.models.shared.view_model import BaseViewModel
+from pypi.view_models.shared.view_model import BaseViewModel
 
 
 class LoginViewModel(BaseViewModel):
