@@ -18,5 +18,6 @@ class DetailPackageViewModel(BaseViewModel):
         if not self.package or not self.latest_release:
             return
 
-        self.latest_version = self.latest_release.version
+        release = self.latest_release
+        self.latest_version = f"{release.major_ver}.{release.minor_ver}.{release.build_ver}"
         self.maintainers = self.package.maintainers
