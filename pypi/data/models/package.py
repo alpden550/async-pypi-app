@@ -3,7 +3,7 @@ import datetime
 import sqlalchemy as sa
 import sqlalchemy.orm as orm
 
-from pypi.data.base_model import BaseSQLAlchemy
+from pypi.data.models.base_model import BaseSQLAlchemy
 
 
 class Package(BaseSQLAlchemy):
@@ -23,7 +23,7 @@ class Package(BaseSQLAlchemy):
     user_id: int = sa.Column(sa.ForeignKey("users.id"))
     user = orm.relationship("User", backref="packages")
 
-    maintainers = sa.Column(sa.ARRAY(sa.String))
+    maintainer = sa.Column(sa.ARRAY(sa.String))
 
     def __repr__(self):
         return f"<Package {self.id}>"

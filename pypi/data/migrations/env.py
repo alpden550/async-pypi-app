@@ -2,12 +2,12 @@ from logging.config import fileConfig
 
 from alembic import context
 
-import pypi.data.__all_models  # noqa
+import pypi.data.models.__all_models  # noqa
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 from pypi.config import get_settings
-from pypi.data.base_model import BaseSQLAlchemy
+from pypi.data.models.base_model import BaseSQLAlchemy
 from pypi.data.db_session import engine
 
 config = context.config

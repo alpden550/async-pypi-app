@@ -2,7 +2,7 @@ import datetime
 
 import sqlalchemy as sa
 
-from pypi.data.base_model import BaseSQLAlchemy
+from pypi.data.models.base_model import BaseSQLAlchemy
 
 
 class User(BaseSQLAlchemy):

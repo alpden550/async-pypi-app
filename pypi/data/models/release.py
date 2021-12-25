@@ -3,7 +3,7 @@ import datetime
 import sqlalchemy as sa
 import sqlalchemy.orm as orm
 
-from pypi.data.base_model import BaseSQLAlchemy
+from pypi.data.models.base_model import BaseSQLAlchemy
 
 
 class Release(BaseSQLAlchemy):

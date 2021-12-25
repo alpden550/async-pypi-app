@@ -5,7 +5,7 @@ import sqlalchemy.orm as orm
 from sqlalchemy.orm import Session
 
 from pypi.config import get_settings
-from pypi.data.base_model import BaseSQLAlchemy
+from pypi.data.models.base_model import BaseSQLAlchemy
 
 __factory: Optional[Callable[[], Session]] = None
 engine = sa.create_engine(get_settings().database_url, pool_pre_ping=True, echo=False)
@@ -22,7 +22,7 @@ def global_init(db_file: str):
 
     __factory = orm.sessionmaker(bind=engine)
 
-    import pypi.data.__all_models  # noqa
+    import pypi.data.models.__all_models  # noqa
 
     BaseSQLAlchemy.metadata.create_all(engine)
 

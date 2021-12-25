@@ -1,8 +1,8 @@
 from datetime import datetime
 from typing import Optional
 
-from pypi.data.package import Package
-from pypi.data.release import Release
+from pypi.data.models.package import Package
+from pypi.data.models.release import Release
 
 
 def count_packages() -> int:
