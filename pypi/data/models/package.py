@@ -21,7 +21,7 @@ class Package(BaseSQLAlchemy):
     license: str = sa.Column(sa.String, index=True)
 
     user_id: int = sa.Column(sa.ForeignKey("users.id"))
-    user = orm.relationship("User", backref="packages")
+    user = orm.relationship("User", backref="packages", lazy="joined")
 
     maintainers = sa.Column(sa.ARRAY(sa.String))
 
