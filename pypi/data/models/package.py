@@ -12,8 +12,8 @@ class Package(BaseSQLAlchemy):
     id: str = sa.Column(sa.String, primary_key=True, unique=True)
     created_at: datetime.datetime = sa.Column(sa.DateTime, default=datetime.datetime.now(), primary_key=True)
     updated_at: datetime.datetime = sa.Column(sa.DateTime, default=datetime.datetime.now(), primary_key=True)
-    summary: str = sa.Column(sa.String, nullable=False)
-    description: str = sa.Column(sa.String, nullable=False)
+    summary: str = sa.Column(sa.String)
+    description: str = sa.Column(sa.String)
 
     home_page: str = sa.Column(sa.String)
     docs_url: str = sa.Column(sa.String)
@@ -23,7 +23,7 @@ class Package(BaseSQLAlchemy):
     user_id: int = sa.Column(sa.ForeignKey("users.id"))
     user = orm.relationship("User", backref="packages")
 
-    maintainer = sa.Column(sa.ARRAY(sa.String))
+    maintainers = sa.Column(sa.ARRAY(sa.String))
 
     def __repr__(self):
         return f"<Package {self.id}>"
