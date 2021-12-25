@@ -23,5 +23,7 @@ class Package(BaseSQLAlchemy):
     user_id: int = sa.Column(sa.ForeignKey("users.id"))
     user = orm.relationship("User", backref="packages")
 
+    maintainers = sa.Column(sa.ARRAY(sa.String))
+
     def __repr__(self):
         return f"<Package {self.id}>"
