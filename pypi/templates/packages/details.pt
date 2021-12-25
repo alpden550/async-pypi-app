@@ -29,7 +29,7 @@
             <div class="latest-release-date">
               Last release:
               <span tal:condition="latest_release">
-                ${ latest_release.created_date.date().isoformat() }
+                ${ latest_release.created_at.date().isoformat() }
               </span>
             </div>
           </div>
@@ -66,7 +66,7 @@
 
 
             <h3>Project links</h3>
-            <a href="${ package.home_page }">
+            <a href="${ package.home_page }" target="_blank">
               <i class="fa fa-home" aria-hidden="true"></i>
               Homepage
             </a>
@@ -76,9 +76,9 @@
             <h3>Statistics</h3>
 
             <p>View statistics for this project via
-              <a class="link-inline" href="https://libraries.io/pypi/${ package.id }">Libraries.io</a>,
+              <a class="link-inline" href="https://libraries.io/pypi/${ package.id }" target="_blank">Libraries.io</a>,
               or by using
-              <a class="link-inline"
+              <a class="link-inline" target="_blank"
                  href="https://packaging.python.org/guides/analyzing-pypi-package-downloads/">Google
                 BigQuery</a>
             </p>
@@ -90,17 +90,17 @@
               <span>License</span>: ${ package.license }
             </div>
 
-            <div class="meta-topic" tal:condition="package.author_name">
-              <span>Author</span>: ${ package.author_name }
+            <div class="meta-topic" tal:condition="package.user.name">
+              <span>Author</span>: ${ package.user.name }
             </div>
             <hr>
 
 
             <h3>Maintainers</h3>
-            <div class="maintainer" tal:repeat="m maintainers">
-              <img src="${ m.profile_image_url }" alt="">
-              <a href="#">${ m.name }</a>
-            </div>
+              <div class="maintainer" tal:repeat="m maintainers">
+               ${ m }
+              </div>
+            <hr>
             <hr>
             <h3>License</h3>
             <div class="license">
