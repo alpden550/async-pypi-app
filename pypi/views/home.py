@@ -9,6 +9,7 @@ router = APIRouter()
 
 @router.get("/")
 @template("home/index.pt")
-def index(request: Request):
+async def index(request: Request):
     model = IndexViewModel(request)
+    await model.load()
     return model.to_dict()
