@@ -1,4 +1,5 @@
 import json
+import logging
 import pathlib
 from typing import Generator, Optional, Any
 
@@ -12,6 +13,8 @@ from pypi.data.models.package import Package
 from pypi.data.models.release import Release
 from pypi.data.models.user import User
 from pypi.infrastructure.helpers import try_int
+
+logging.basicConfig(level=logging.INFO)
 
 
 def fetch_packages_files() -> Generator[pathlib.Path, None, None]:
@@ -99,6 +102,7 @@ def main():
         package_info = package_json["info"]
 
         user = add_user(session=session, name=package_info.get("author"), email=package_info.get("author_email"))
+        logging.info(f"Added user {user}")
         package = add_package(
             session=session,
             package_id=package_info["name"],
@@ -131,7 +135,7 @@ def main():
                 },
             )
 
-        print(package)
+        logging.info(f"Added package {package}")
 
     session.close()
 
