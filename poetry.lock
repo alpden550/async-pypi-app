@@ -588,7 +588,7 @@ standard = ["websockets (>=9.1)", "httptools (>=0.2.0,<0.3.0)", "watchgod (>=0.6
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "953e0914c293d7bb42df37b9833f0af300091eb4e224c84bd086034d06e8c7b4"
+content-hash = "e6b6a8151be0fa4f18306584013bd926438d239d89921584bb26865cc8e11161"
 
 [metadata.files]
 alembic = [
