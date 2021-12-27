@@ -26,4 +26,7 @@ RUN poetry install
 
 COPY . /app
 
+EXPOSE 8000
+EXPOSE 443
+
 ENTRYPOINT ["/app/entrypoint.sh"]
