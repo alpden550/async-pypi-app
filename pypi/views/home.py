@@ -9,7 +9,7 @@ from pypi.view_models.home import IndexViewModel
 router = APIRouter()
 
 
-@router.get("/")
+@router.get("/", include_in_schema=False)
 @template("home/index.pt")
 async def index(request: Request, session: AsyncSession = Depends(get_session)):
     model = IndexViewModel(request)

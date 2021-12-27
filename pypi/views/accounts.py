@@ -13,7 +13,7 @@ from pypi.view_models.account import AccountViewModel, LoginViewModel, RegisterV
 router = APIRouter()
 
 
-@router.get("/")
+@router.get("/", include_in_schema=False)
 @template("account/index.pt")
 async def account(request: Request, session: AsyncSession = Depends(get_session)):
     account_model = AccountViewModel(request)
@@ -21,14 +21,14 @@ async def account(request: Request, session: AsyncSession = Depends(get_session)
     return account_model.to_dict()
 
 
-@router.get("/register")
+@router.get("/register", include_in_schema=False)
 @template("account/register.pt")
 def get_register(request: Request):
     register_model = RegisterViewModel(request)
     return register_model.to_dict()
 
 
-@router.post("/register")
+@router.post("/register", include_in_schema=False)
 @template("account/register.pt")
 async def post_register(request: Request, session: AsyncSession = Depends(get_session)):
     register_model = RegisterViewModel(request)
@@ -48,14 +48,14 @@ async def post_register(request: Request, session: AsyncSession = Depends(get_se
     return response
 
 
-@router.get("/login")
+@router.get("/login", include_in_schema=False)
 @template("account/login.pt")
 def get_login(request: Request):
     login_model = LoginViewModel(request)
     return login_model.to_dict()
 
 
-@router.post("/login")
+@router.post("/login", include_in_schema=False)
 @template("account/login.pt")
 async def post_login(request: Request, session: AsyncSession = Depends(get_session)):
     login_model = LoginViewModel(request)
@@ -74,7 +74,7 @@ async def post_login(request: Request, session: AsyncSession = Depends(get_sessi
     return response
 
 
-@router.get("/logout")
+@router.get("/logout", include_in_schema=False)
 def logout():
     response = fastapi.responses.RedirectResponse(url="/", status_code=status.HTTP_302_FOUND)
     cookie_auth.logout(response)

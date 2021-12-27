@@ -9,7 +9,7 @@ from pypi.view_models.packages import DetailPackageViewModel
 router = APIRouter()
 
 
-@router.get("/{package_name}")
+@router.get("/{package_name}", include_in_schema=False)
 @template("packages/details.pt")
 async def detail(package_name: str, request: Request, session: AsyncSession = Depends(get_session)):
     detail_model = DetailPackageViewModel(package_name, request)
