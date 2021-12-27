@@ -29,4 +29,6 @@ COPY . /app
 EXPOSE 8000
 EXPOSE 443
 
+ENV PYTHONPATH /app
+
 ENTRYPOINT ["/app/entrypoint.sh"]
