@@ -3,19 +3,18 @@ from typing import Optional, Callable
 import sqlalchemy as sa
 import sqlalchemy.orm as orm
 from sqlalchemy.engine import Engine
-from sqlalchemy.ext.asyncio import AsyncEngine, create_async_engine, AsyncSession
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import Session
 
 from pypi.config import get_settings
 from pypi.data.models.base_model import BaseSQLAlchemy
 
 __factory: Optional[Callable[[], Session]] = None
-__async_engine: Optional[AsyncEngine] = None
 engine: Engine = sa.create_engine(get_settings().database_url, pool_pre_ping=True, echo=False)
 
 
 def global_init(db_file: str):
-    global __factory, __async_engine
+    global __factory
 
     if __factory:
         return
@@ -24,7 +23,6 @@ def global_init(db_file: str):
         raise Exception("You must specify the database.")
 
     __factory = orm.sessionmaker(bind=engine)
-    __async_engine = create_async_engine(get_settings().async_database_url, echo=False)
 
     import pypi.data.models.__all_models  # noqa
 
@@ -44,12 +42,14 @@ def create_session() -> Session:
 
 
 def create_async_session() -> AsyncSession:
-    global __async_engine
+    async_engine = create_async_engine(get_settings().async_database_url, echo=False)
 
-    if not __async_engine:
-        raise Exception("You must call global_init() before using this method.")
-
-    session: AsyncSession = AsyncSession(__async_engine)
+    session: AsyncSession = AsyncSession(async_engine)
     session.sync_session.expire_on_commit = False
 
     return session
+
+
+async def get_session() -> AsyncSession:
+    async with create_async_session() as session:
+        yield session
