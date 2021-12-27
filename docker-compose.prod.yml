@@ -1,0 +1,39 @@
+version: "3.8"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+    command: >
+      sh -c "uvicorn server:app --host 0.0.0.0"
+    networks:
+      - web
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.app.loadbalancer.server.port=8000"
+      - "traefik.http.routers.fastapi.rule=Host(${TRAEFIK_HOST})"
+      - "traefik.http.routers.app.tls=true"
+      - "traefik.http.routers.app.tls.certresolver=lets-encrypt"
+
+  db:
+      image: postgres
+      ports:
+        - "5432:5432"
+      networks:
+        - web
+      volumes:
+        - postgres_data_pypi:/var/lib/postgresql/data/
+
+volumes:
+  postgres_data_pypi:
+
+networks:
+  web:
+    external: true
