@@ -1,9 +1,11 @@
 import fastapi.responses
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from fastapi_chameleon import template
+from sqlalchemy.ext.asyncio import AsyncSession
 from starlette import status
 from starlette.requests import Request
 
+from pypi.data.db_session import get_session
 from pypi.infrastructure import cookie_auth
 from pypi.services import user_service
 from pypi.view_models.account import AccountViewModel, LoginViewModel, RegisterViewModel
@@ -13,9 +15,9 @@ router = APIRouter()
 
 @router.get("/")
 @template("account/index.pt")
-async def account(request: Request):
+async def account(request: Request, session: AsyncSession = Depends(get_session)):
     account_model = AccountViewModel(request)
-    await account_model.load()
+    await account_model.load(session=session)
     return account_model.to_dict()
 
 
@@ -28,14 +30,19 @@ def get_register(request: Request):
 
 @router.post("/register")
 @template("account/register.pt")
-async def post_register(request: Request):
+async def post_register(request: Request, session: AsyncSession = Depends(get_session)):
     register_model = RegisterViewModel(request)
-    await register_model.load()
+    await register_model.load(session=session)
 
     if register_model.error:
         return register_model.to_dict()
 
-    user_account = await user_service.create_account(register_model.name, register_model.email, register_model.password)
+    user_account = await user_service.create_account(
+        session=session,
+        name=register_model.name,
+        email=register_model.email,
+        password=register_model.password,
+    )
     response = fastapi.responses.RedirectResponse(url="/account", status_code=status.HTTP_302_FOUND)
     cookie_auth.set_auth(response, user_account.id)
     return response
@@ -50,14 +57,14 @@ def get_login(request: Request):
 
 @router.post("/login")
 @template("account/login.pt")
-async def post_login(request: Request):
+async def post_login(request: Request, session: AsyncSession = Depends(get_session)):
     login_model = LoginViewModel(request)
     await login_model.load()
 
     if login_model.error:
         return login_model.to_dict()
 
-    user = await user_service.login_user(login_model.email, login_model.password)
+    user = await user_service.login_user(session=session, email=login_model.email, password=login_model.password)
     if not user:
         login_model.error = "The account does not exist or the password is wrong."
         return login_model.to_dict()
