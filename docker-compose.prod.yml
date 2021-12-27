@@ -15,6 +15,8 @@ services:
       sh -c "uvicorn server:app --host 0.0.0.0"
     networks:
       - web
+    env_file:
+      - .env.prod
     labels:
       - "traefik.enable=true"
       - "traefik.http.services.app.loadbalancer.server.port=8000"
@@ -28,6 +30,8 @@ services:
         - "5432:5432"
       networks:
         - web
+      env_file:
+        - .env.prod
       volumes:
         - postgres_data_pypi:/var/lib/postgresql/data/
 
