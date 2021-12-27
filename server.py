@@ -21,14 +21,14 @@ def configure_routes():
     app.include_router(packages.router, prefix="/project")
 
 
-def configure_db(dev_mode: bool):
+def configure_db():
     db_session.global_init(get_settings().database_url)
 
 
 def configure_app():
     configure_templates()
     configure_routes()
-    configure_db(dev_mode=True)
+    configure_db()
 
 
 def main():
