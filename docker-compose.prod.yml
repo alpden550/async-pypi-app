@@ -19,10 +19,10 @@ services:
       - .env.prod
     labels:
       - traefik.enable=true
-      - traefik.http.services.app.loadbalancer.server.port=8080
-      - traefik.http.routers.app.rule=Host(`pypi.shorten.ru.com`)
-      - traefik.http.routers.app.tls=true
-      - traefik.http.routers.app.tls.certresolver=lets-encrypt
+      - traefik.http.services.pypi_app.loadbalancer.server.port=8080
+      - traefik.http.routers.pypi_app.rule=Host(`pypi.shorten.ru.com`)
+      - traefik.http.routers.pypi_app.tls=true
+      - traefik.http.routers.pypi_app.tls.certresolver=lets-encrypt
 
   pypi_db:
       image: postgres
