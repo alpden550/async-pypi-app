@@ -1,5 +1,6 @@
 from typing import Optional
 
+from sqlalchemy.ext.asyncio import AsyncSession
 from starlette.requests import Request
 
 from pypi.services import user_service
@@ -14,7 +15,7 @@ class RegisterViewModel(BaseViewModel):
         self.email: Optional[str] = None
         self.password: Optional[str] = None
 
-    async def load(self):
+    async def load(self, session: AsyncSession):
         form = await self.request.form()
         self.name = form.get("name")
         self.email = form.get("email")
@@ -26,5 +27,5 @@ class RegisterViewModel(BaseViewModel):
             self.error = "Your email is required."
         elif not self.password or len(self.password) < 5:
             self.error = "Your password is required and must be at 5 characters."
-        elif await user_service.get_user_by_email(self.email):
+        elif await user_service.get_user_by_email(session=session, email=self.email):
             self.error = "This email already exists. Could log in instead?"
