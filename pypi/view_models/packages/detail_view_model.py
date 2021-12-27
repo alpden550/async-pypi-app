@@ -1,5 +1,6 @@
 from typing import Optional
 
+from sqlalchemy.ext.asyncio import AsyncSession
 from starlette.requests import Request
 
 from pypi.data.models.package import Package
@@ -19,9 +20,12 @@ class DetailPackageViewModel(BaseViewModel):
         self.is_latest = True
         self.maintainers = []
 
-    async def load(self):
-        self.package = await package_service.get_package(self.package_name)
-        self.latest_release = await package_service.get_latest_package_release(self.package_name)
+    async def load(self, session: AsyncSession):
+        self.package = await package_service.get_package(session=session, package_name=self.package_name)
+        self.latest_release = await package_service.get_latest_package_release(
+            session=session,
+            package_name=self.package_name,
+        )
         if not self.package or not self.latest_release:
             return
 
