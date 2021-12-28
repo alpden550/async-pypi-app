@@ -9,9 +9,6 @@ class Settings(BaseSettings):
     database_url: str
     async_database_url: str
 
-    class Config:
-        env_file = ".env"
-
 
 @lru_cache()
 def get_settings():
