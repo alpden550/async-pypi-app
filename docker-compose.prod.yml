@@ -17,6 +17,7 @@ services:
       - web
     env_file:
       - .env.prod
+    restart: always
     labels:
       - traefik.enable=true
       - traefik.http.services.pypi_app.loadbalancer.server.port=8080
@@ -34,6 +35,7 @@ services:
         - .env.prod
       volumes:
         - postgres_data_pypi:/var/lib/postgresql/data/
+      restart: always
 
 volumes:
   postgres_data_pypi:
