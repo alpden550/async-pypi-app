@@ -7,9 +7,6 @@ ENV CRYPTOGRAPHY_DONT_BUILD_RUST=1
 
 WORKDIR /app
 
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
-
 RUN apk update \
     && apk add gcc python3-dev musl-dev build-base postgresql-dev libffi-dev\
     && apk add zlib-dev cairo-dev pango-dev gdk-pixbuf-dev \
